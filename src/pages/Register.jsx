@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { RegisterDTO } from "../dto/AuthDTO";
+import { authAPI } from "../api/authAPI";
+
 
 const Register = () => {
   const navigate = useNavigate();
@@ -16,16 +19,30 @@ const Register = () => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (form.password !== form.confirmPassword) {
-      alert("Пароли не совпадают");
-      return;
-    }
-    // Здесь логика регистрации (например, fetch к API)
-    alert("Регистрация успешна!");
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (form.password !== form.confirmPassword) {
+    alert("Пароли не совпадают");
+    return;
+  }
+
+  try {
+    const dto = new RegisterDTO(
+      form.fullName,
+      form.email,
+      form.phone,
+      form.login,
+      form.password
+    );
+    const user = await authAPI.register(dto);
+    localStorage.setItem("currentUser", JSON.stringify(user));
     navigate("/profile");
-  };
+  } catch (err) {
+    alert(err.message || "Ошибка при регистрации");
+  }
+};
+
 
   return (
     <main className="pt-16 pb-16 max-w-[375px] mx-auto">

@@ -1,9 +1,19 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { authAPI } from "../api/authAPI";
+
 
 const tabs = ["Книги", "История", "Избранное"];
 
+
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("Книги");
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    authAPI.logout();
+    navigate("/login");
+  };
 
   return (
     <main className="pt-16 pb-16 max-w-[375px] mx-auto">
@@ -56,11 +66,10 @@ const Profile = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 py-2 px-1 text-sm font-medium ${
-                activeTab === tab
-                  ? "bg-primary text-white"
-                  : "bg-white text-gray-600"
-              }`}
+              className={`flex-1 py-2 px-1 text-sm font-medium ${activeTab === tab
+                ? "bg-primary text-white"
+                : "bg-white text-gray-600"
+                }`}
             >
               {tab}
             </button>
@@ -153,6 +162,13 @@ const Profile = () => {
             </div>
           </>
         )}
+        <button
+          onClick={handleLogout}
+          className="w-full mt-6 py-2.5 bg-red-100 text-red-600 rounded-button font-medium text-sm"
+        >
+          Выйти из аккаунта
+        </button>
+
       </div>
     </main>
   );

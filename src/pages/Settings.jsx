@@ -1,49 +1,98 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
-  const [settings, setSettings] = useState({
-    push: true,
-    returnReminders: true,
-    eventUpdates: false,
+  const navigate = useNavigate();
+  const [form, setForm] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    login: "",
   });
 
-  const toggle = (key) => {
-    setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    if (user) {
+      setForm({
+        fullName: user.fullName || "",
+        email: user.email || "",
+        phone: user.phone || "",
+        login: user.login || "",
+      });
+    }
+  }, []);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const updatedUser = { ...form };
+    localStorage.setItem("currentUser", JSON.stringify(updatedUser));
+    alert("Профиль обновлён");
+    navigate("/profile");
   };
 
   return (
-    <main className="pt-16 pb-16 max-w-[375px] mx-auto">
-      <div className="px-4 py-4">
-        <h1 className="text-2xl font-bold text-gray-800 mb-4">Настройки</h1>
+    <main className="pt-16 pb-16 max-w-[375px] mx-auto px-4">
+      <h1 className="text-xl font-bold mb-6">Настройки профиля</h1>
 
-        <div className="bg-white rounded-lg shadow-sm p-4 space-y-4">
-          {[
-            { key: "push", label: "Push-уведомления" },
-            { key: "returnReminders", label: "Напоминания о возврате" },
-            { key: "eventUpdates", label: "Обновления событий" },
-          ].map(({ key, label }) => (
-            <div key={key} className="flex items-center justify-between">
-              <span className="text-sm text-gray-800">{label}</span>
-              <div
-                className={`w-12 h-6 rounded-full p-1 duration-300 ease-in-out cursor-pointer ${
-                  settings[key] ? "bg-primary" : "bg-gray-300"
-                }`}
-                onClick={() => toggle(key)}
-              >
-                <div
-                  className={`w-4 h-4 rounded-full bg-white shadow-md transform duration-300 ease-in-out ${
-                    settings[key] ? "translate-x-6" : ""
-                  }`}
-                ></div>
-              </div>
-            </div>
-          ))}
-        </div>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <label className="block">
+          <span className="text-sm font-medium text-gray-700">ФИО</span>
+          <input
+            type="text"
+            name="fullName"
+            value={form.fullName}
+            onChange={handleChange}
+            className="mt-1 block w-full border rounded-button px-3 py-2 text-sm"
+            required
+          />
+        </label>
 
-        <button className="w-full mt-6 py-2.5 bg-red-100 text-red-600 rounded-button font-medium text-sm">
-          Выйти из аккаунта
+        <label className="block">
+          <span className="text-sm font-medium text-gray-700">Email</span>
+          <input
+            type="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            className="mt-1 block w-full border rounded-button px-3 py-2 text-sm"
+            required
+          />
+        </label>
+
+        <label className="block">
+          <span className="text-sm font-medium text-gray-700">Телефон</span>
+          <input
+            type="tel"
+            name="phone"
+            value={form.phone}
+            onChange={handleChange}
+            className="mt-1 block w-full border rounded-button px-3 py-2 text-sm"
+          />
+        </label>
+
+        <label className="block">
+          <span className="text-sm font-medium text-gray-700">Логин</span>
+          <input
+            type="text"
+            name="login"
+            value={form.login}
+            onChange={handleChange}
+            className="mt-1 block w-full border rounded-button px-3 py-2 text-sm"
+            required
+          />
+        </label>
+
+        <button
+          type="submit"
+          className="w-full py-2.5 bg-primary text-white rounded-button text-sm font-medium"
+        >
+          Сохранить изменения
         </button>
-      </div>
+      </form>
     </main>
   );
 };
