@@ -25,8 +25,14 @@ const Catalog = () => {
     bookAPI
       .getAll()
       .then((data) => {
-        setBooks(data);
-        setFiltered(data);
+        const normalized = data.map((book) => ({
+          ...book,
+          category: book.category || "Без категории",
+          rating: typeof book.rating === "number" ? book.rating : 0,
+          date: book.date || "2000-01-01",
+        }));
+        setBooks(normalized);
+        setFiltered(normalized);
       })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -147,7 +153,7 @@ const Catalog = () => {
                     })}
                   </div>
                   <span className="text-xs text-gray-500 ml-1">
-                    {book.rating}
+                    {book.rating.toFixed(1)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">

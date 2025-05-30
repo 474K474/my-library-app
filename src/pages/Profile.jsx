@@ -2,18 +2,26 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authAPI } from "../api/authAPI";
 
-
 const tabs = ["Книги", "История", "Избранное"];
-
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("Книги");
   const navigate = useNavigate();
 
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
   const handleLogout = () => {
     authAPI.logout();
     navigate("/login");
   };
+
+  if (!currentUser) {
+    return (
+      <main className="pt-16 pb-16 max-w-[375px] mx-auto px-4">
+        <p className="text-sm text-center text-gray-500">Пользователь не найден</p>
+      </main>
+    );
+  }
 
   return (
     <main className="pt-16 pb-16 max-w-[375px] mx-auto">
@@ -28,7 +36,7 @@ const Profile = () => {
             />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-gray-800">Анна Смирнова</h1>
+            <h1 className="text-xl font-bold text-gray-800">{currentUser.fullName}</h1>
             <p className="text-sm text-gray-600">Активный читатель с 2020 года</p>
           </div>
         </div>
@@ -40,7 +48,9 @@ const Profile = () => {
           <div className="flex justify-between items-start mb-4">
             <div>
               <p className="text-sm opacity-80">Читательский билет</p>
-              <p className="text-lg font-bold">№ 12345678</p>
+              <p className="text-lg font-bold">
+                № {currentUser.id.toString().padStart(8, "0")}
+              </p>
             </div>
             <div className="w-16 h-16 bg-white rounded p-1">
               <img src="/images/QR_code.jpg" alt="QR-код" className="w-full h-full" />
@@ -66,10 +76,11 @@ const Profile = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 py-2 px-1 text-sm font-medium ${activeTab === tab
-                ? "bg-primary text-white"
-                : "bg-white text-gray-600"
-                }`}
+              className={`flex-1 py-2 px-1 text-sm font-medium ${
+                activeTab === tab
+                  ? "bg-primary text-white"
+                  : "bg-white text-gray-600"
+              }`}
             >
               {tab}
             </button>
@@ -80,95 +91,23 @@ const Profile = () => {
       {/* Контент вкладок */}
       <div className="px-4 space-y-4">
         {activeTab === "Книги" && (
-          <>
-            <h3 className="font-bold text-gray-800">Активные книги</h3>
-            <div className="bg-white rounded shadow-sm p-4">
-              <div className="flex gap-3">
-                <div className="w-16 h-24 bg-gray-200 rounded overflow-hidden flex-shrink-0">
-                  <img
-                    src="/images/UP_book.webp"
-                    alt="Безмолвный пациент"
-                    className="w-full h-full object-cover object-top"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h4 className="font-medium text-gray-800">Безмолвный пациент</h4>
-                  <p className="text-sm text-gray-600">Алекс Михаэлидес</p>
-                  <p className="text-xs text-gray-600 mt-2">Вернуть до: 25.05.2025</p>
-                  <div className="mt-3 flex justify-between items-center">
-                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                      <i className="ri-time-line w-3 h-3 mr-1"></i> 14 дней
-                    </span>
-                    <button className="text-primary text-sm font-medium">Продлить</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
+          <p className="text-sm text-gray-500 text-center">Здесь появятся ваши книги</p>
         )}
 
         {activeTab === "История" && (
-          <>
-            <h3 className="font-bold text-gray-800">История посещений</h3>
-            <div className="bg-white rounded shadow-sm p-4">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary bg-opacity-10 flex items-center justify-center">
-                  <i className="ri-building-line text-primary"></i>
-                </div>
-                <div>
-                  <h4 className="font-medium text-gray-800">Центральная библиотека</h4>
-                  <p className="text-xs text-gray-600">11 мая 2025, 14:30</p>
-                  <p className="text-xs text-gray-600 mt-1">Взято: 1 • Возвращено: 2</p>
-                </div>
-              </div>
-            </div>
-          </>
+          <p className="text-sm text-gray-500 text-center">История будет доступна позже</p>
         )}
 
         {activeTab === "Избранное" && (
-          <>
-            <h3 className="font-bold text-gray-800">Избранные книги</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col items-center">
-                <div className="w-28 h-40 bg-gray-200 rounded overflow-hidden mb-2">
-                  <img
-                    src="/images/SW_book.webp"
-                    alt="Тень ветра"
-                    className="w-full h-full object-cover object-top"
-                  />
-                </div>
-                <h4 className="text-sm font-medium text-gray-800 text-center truncate w-full">
-                  Тень ветра
-                </h4>
-                <p className="text-xs text-gray-600 text-center truncate w-full">
-                  К. Р. Сафон
-                </p>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="w-28 h-40 bg-gray-200 rounded overflow-hidden mb-2">
-                  <img
-                    src="/images/NW_book.webp"
-                    alt="Имя ветра"
-                    className="w-full h-full object-cover object-top"
-                  />
-                </div>
-                <h4 className="text-sm font-medium text-gray-800 text-center truncate w-full">
-                  Имя ветра
-                </h4>
-                <p className="text-xs text-gray-600 text-center truncate w-full">
-                  П. Ротфусс
-                </p>
-              </div>
-            </div>
-          </>
+          <p className="text-sm text-gray-500 text-center">Список избранного пуст</p>
         )}
+
         <button
           onClick={handleLogout}
           className="w-full mt-6 py-2.5 bg-red-100 text-red-600 rounded-button font-medium text-sm"
         >
           Выйти из аккаунта
         </button>
-
       </div>
     </main>
   );

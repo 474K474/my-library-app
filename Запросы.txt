@@ -1,0 +1,156 @@
+POST /api/auth/login
+Запрос:
+{
+  "login": "anna2020",
+  "password": "12345678"
+}
+
+Ответ:
+{
+  "id": 1,
+  "fullName": "Анна Смирнова",
+  "email": "anna@mail.ru",
+  "phone": "+7 999 123-45-67",
+  "login": "anna2020"
+}
+
+---
+
+POST /api/auth/register
+Запрос:
+{
+  "fullName": "Анна Смирнова",
+  "email": "anna@mail.ru",
+  "phone": "+7 999 123-45-67",
+  "login": "anna2020",
+  "password": "12345678"
+}
+
+Ответ:
+{
+  "id": 1,
+  "fullName": "Анна Смирнова",
+  "email": "anna@mail.ru",
+  "phone": "+7 999 123-45-67",
+  "login": "anna2020"
+}
+
+---
+
+POST /api/books/reserve
+Запрос:
+{
+  "bookId": 12,
+  "userId": 3,
+  "pickupDate": "2025-06-10"
+}
+
+Ответ:
+{
+  "success": true,
+  "message": "Бронирование успешно"
+}
+
+---
+
+GET /api/books
+Ответ:
+[
+  {
+    "id": 5,
+    "title": "Безмолвный пациент",
+    "author": "Алекс Михаэлидес",
+    "image": "UP_book.webp",
+    "available": true,
+    "rating": 4.5,
+    "category": "Психология",
+    "date": "2025-05-01"
+  }
+]
+
+---
+
+GET /api/books/:id
+Ответ:
+{
+  "id": 5,
+  "title": "Безмолвный пациент",
+  "author": "Алекс Михаэлидес",
+  "image": "UP_book.webp",
+  "available": true,
+  "rating": 4.5,
+  "category": "Психология",
+  "date": "2025-05-01",
+  "description": "Описание книги..."
+}
+
+---
+
+GET /api/filials
+Ответ:
+[
+  {
+    "id": 2,
+    "name": "Филиал №2",
+    "address": "ул. Примерная, 7",
+    "hours": "10:00–20:00",
+    "open": true,
+    "image": "filial2.jpg"
+  }
+]
+
+---
+
+GET /api/filials/:id
+Ответ:
+{
+  "id": 2,
+  "name": "Филиал №2",
+  "address": "ул. Примерная, 7",
+  "hours": "10:00–20:00",
+  "open": true,
+  "image": "filial2.jpg",
+  "description": "Описание филиала...",
+  "events": [
+    {
+      "id": 7,
+      "title": "Встреча с писателем",
+      "date": "2025-06-01",
+      "time": "16:00",
+      "image": "event1.jpg"
+    }
+  ]
+}
+
+---
+
+GET /api/meetings
+Ответ:
+[
+  {
+    "id": 3,
+    "title": "Книжный клуб",
+    "date": "2025-06-12",
+    "time": "17:00",
+    "location": "Центральный филиал",
+    "image": "club.jpg"
+  }
+]
+
+---
+
+PATCH /api/users/update
+Запрос:
+{
+  "id": 1,
+  "fullName": "Анна Смирнова",
+  "email": "anna_new@mail.ru",
+  "phone": "+7 999 888-77-66",
+  "login": "anna2020"
+}
+
+Ответ:
+{
+  "success": true,
+  "message": "Профиль обновлён"
+}
