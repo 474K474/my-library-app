@@ -101,7 +101,7 @@ const Home = () => {
             {books.map((book) => (
               <div key={book.id} className="bg-white p-2 rounded shadow-sm">
                 <img
-                  src={`/images/${book.image}`}
+                  src={book.image}
                   alt={book.title}
                   className="w-full h-40 object-cover mb-2 rounded"
                 />
@@ -128,7 +128,7 @@ const Home = () => {
               >
                 <div className="h-32 w-full overflow-hidden">
                   <img
-                    src={`/images/${filial.image}`}
+                    src={filial.image}
                     alt={filial.name}
                     className="w-full h-full object-cover"
                   />

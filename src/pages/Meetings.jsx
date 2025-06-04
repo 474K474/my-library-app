@@ -27,7 +27,7 @@ const Meetings = () => {
         {meetings.map((meeting) => (
           <div key={meeting.id} className="border rounded-xl overflow-hidden shadow">
             <img
-              src={`/images/meetings/${meeting.image}`}
+              src={meeting.image}
               alt={meeting.title}
               className="w-full h-40 object-cover"
             />

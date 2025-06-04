@@ -65,7 +65,7 @@ const Filials = () => {
               >
                 <div className="h-32 w-full overflow-hidden">
                   <img
-                    src={`/images/${filial.image}`}
+                    src={filial.image}
                     alt={filial.name}
                     className="w-full h-full object-cover"
                   />

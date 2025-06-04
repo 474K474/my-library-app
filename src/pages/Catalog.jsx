@@ -129,7 +129,7 @@ const Catalog = () => {
             >
               <div className="w-20 h-28 rounded overflow-hidden flex-shrink-0 mr-3">
                 <img
-                  src={`/images/${book.image}`}
+                  src={book.image}
                   alt={book.title}
                   className="w-full h-full object-cover"
                 />

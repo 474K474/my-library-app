@@ -36,7 +36,7 @@ const LibraryFilial = () => {
       {/* Фото */}
       <div className="w-full h-48 overflow-hidden">
         <img
-          src={`/images/${filial.image}`}
+          src={filial.image}
           alt={filial.name}
           className="w-full h-full object-cover object-center"
         />
@@ -87,7 +87,7 @@ const LibraryFilial = () => {
               >
                 <div className="h-32">
                   <img
-                    src={`/images/${event.image}`}
+                    src={event.image}
                     alt={event.title}
                     className="w-full h-full object-cover"
                   />
