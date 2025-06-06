@@ -123,7 +123,8 @@ const Catalog = () => {
           <p className="text-center text-sm text-gray-500">Книги не найдены</p>
         ) : (
           filtered.map((book) => (
-            <div
+            <Link 
+              to={`/books/${book.id}`}
               key={book.id}
               className="bg-white rounded-lg shadow-sm p-3 flex cursor-pointer"
             >
@@ -179,7 +180,7 @@ const Catalog = () => {
                   )}
                 </div>
               </div>
-            </div>
+            </Link>
           ))
         )}
       </div>

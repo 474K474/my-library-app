@@ -49,6 +49,17 @@ const Login = () => {
             Войти
           </button>
         </form>
+
+        <div className="text-sm text-gray-700 text-center">
+          Нет аккаунта?{" "}
+          <span
+            onClick={() => navigate("/register")}
+            className="text-primary hover:underline cursor-pointer"
+          >
+            Зарегистрироваться
+          </span>
+        </div>
+
       </div>
     </main>
   );

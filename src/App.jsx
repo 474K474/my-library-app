@@ -13,6 +13,7 @@ import Login from "./pages/Login";
 import Recovery from "./pages/Recovery";
 import Settings from "./pages/Settings";
 import BookBooking from "./pages/BookBooking";
+import BookDetail from "./pages/BookDetail";
 
 // Компоненты
 import Navbar from "./components/Navbar";
@@ -31,6 +32,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/recovery" element={<Recovery />} />
+        <Route path="/books/:id" element={<BookDetail />} />
 
         {/* Защищённые маршруты */}
         <Route
